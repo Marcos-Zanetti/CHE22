@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Carga de productos{% endblock %}
+{% block content %}
+<div class="form-container">
+    <h2>Cargar producto</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{form.name.label(class="form-label")}}
+            {{form.name(class="form-control")}}
+        </div>
+        <div class="form-group">
+            {{form.description.label(class="form-label")}}
+            {{form.description(class="form-control")}}
+        </div>
+        <div class="form-group">
+            {{form.price.label(class="form-label")}}
+            {{form.price(class="form-control")}}
+        </div>
+        <div class="form-group">
+            {{form.path_image.label(class="form-label")}}
+            {{form.path_image(class="form-control")}}
+        </div>
+        <div class="form-group">
+            {{form.submit(class="btn btn-primary")}}
+        </div>
+    </form>
+</div>
+{% endblock %}

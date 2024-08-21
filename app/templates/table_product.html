@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Tabla{% endblock %}
+{% block content %}
+<h2>tabla</h2>
+<ul class="tabla">
+    {% for i in registros %}
+    <li>{{i}}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
