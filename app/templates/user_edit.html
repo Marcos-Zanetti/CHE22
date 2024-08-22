@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block head %}
+<script defer>
+    let selector = document.getElementById('selector')
+    selector.onclick = function () {
+        
+    }
+</script>
+{% endblock %}
+{% block title %}Editor de usuario{% endblock %}
+{% block content %}
+<div class="form-container">
+    <h2>Buscar Usuario</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.selector.label(class="form-label") }}
+            {{ form.selector(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {%%}
+        </div>
+    </form>
+</div>
+{% endblock %}

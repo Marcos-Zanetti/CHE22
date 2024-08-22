@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, session
 from app import db
 from app.models import User, Products
-from app.forms import RegistrationForm, LoginForm, ProductForm
+from app.forms import RegistrationForm, LoginForm, ProductForm, UserEditForm
 
 def init_routes(app):
 
@@ -69,3 +69,11 @@ def init_routes(app):
         for registro in db.session.query(Products):
             registros.append(registro.name)
         return render_template('table_product.html',registros=registros)
+    
+    @app.route('/user_edit',methods=["GET","POST"])
+    def user_edit():
+        form = UserEditForm()
+        if form.validate_on_submit():
+            flash(f'{form.id.data},{form.username.data},{form.email.data}','success')
+            return redirect(url_for('index'))
+        return render_template('user_edit.html',form=form)
