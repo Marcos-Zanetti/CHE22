@@ -17,8 +17,17 @@
             {{ form.selector.label(class="form-label") }}
             {{ form.selector(class="form-control") }}
         </div>
-        <div class="form-group">
-            {%%}
+        <div class="form-group" id="id">
+            {{ form.id.label(class="form-label") }}
+            {{ form.id(class="form-control") }}
+        </div>
+        <div class="form-group" id="username">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+        </div>
+        <div class="form-group" id="email">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control") }}
         </div>
     </form>
 </div>
