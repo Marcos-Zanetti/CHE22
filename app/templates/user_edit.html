@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 {% block head %}
-<script defer>
-    let selector = document.getElementById('selector')
-    selector.onclick = function () {
-        
-    }
-</script>
+<script src="{{ url_for('static',filename = 'scripts/user_edit.js') }}" defer></script>
 {% endblock %}
 {% block title %}Editor de usuario{% endblock %}
 {% block content %}
@@ -28,6 +23,10 @@
         <div class="form-group" id="email">
             {{ form.email.label(class="form-label") }}
             {{ form.email(class="form-control") }}
+        </div>
+        <div class="form-group" id="submit">
+            {{ form.submit.label(class="form-label") }}
+            {{ form.submit(class="form-control") }}
         </div>
     </form>
 </div>

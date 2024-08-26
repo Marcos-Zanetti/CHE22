@@ -43,9 +43,9 @@ class OfferForm(FlaskForm):
     offer_days = StringField('Dias de la semana', validators=[DataRequired()])
 
 class UserEditForm(FlaskForm):
-    id = IntegerField('ID del usuario',validators=[])
-    username = StringField('Nombre de usuario', validators=[Length(min=2, max=20)])
-    email = StringField('Correo electrónico', validators=[Email()])
+    id = IntegerField('ID del usuario',validators=[],default=None)
+    username = StringField('Nombre de usuario', validators=[Length(min=2, max=20)],default=None)
+    email = StringField('Correo electrónico', validators=[Email()],default=None)
     selector = SelectField('Seleccione a través de que dato buscará el usuario',choices=[('id','ID'),('username','Nombre de usuario'),('email','Email')], id="selector")
     submit = SubmitField('Buscar usuario')
 

@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, session
+from flask import render_template, url_for, flash, redirect, session, request
 from app import db
 from app.models import User, Products
 from app.forms import RegistrationForm, LoginForm, ProductForm, UserEditForm
@@ -73,7 +73,22 @@ def init_routes(app):
     @app.route('/user_edit',methods=["GET","POST"])
     def user_edit():
         form = UserEditForm()
-        if form.validate_on_submit():
-            flash(f'{form.id.data},{form.username.data},{form.email.data}','success')
-            return redirect(url_for('index'))
+        if form.id.data != None or form.username.data != None or form.email.data != None:
+            idData = request.form["id"]
+            nameData = request.form["username"]
+            mailData = request.form["email"]
+            if idData != None:
+                # flash(f'ID: {idData}','success')
+                user = User.query.filter_by(id=idData).first()
+                flash(user,'success')
+            elif nameData != None:
+                # flash(f'Nombre de usuario: {nameData}','success')
+                user = User.query.filter_by(username=f"%{nameData}%")
+                flash(user,'success')
+            elif mailData != None:
+                # flash(f'Email: {mailData}','success')
+                user = User.query.filter_by(email=f"%{mailData}%")
+                flash(user,'success')
+        else:
+            flash(f'{form.id.data},{form.username.data},{form.email.data}','danger')
         return render_template('user_edit.html',form=form)
