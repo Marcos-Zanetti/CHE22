@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, session, request
+from flask import render_template, url_for, flash, redirect, session, request, Response
 from app import db
 from app.models import User, Products
 from app.forms import RegistrationForm, LoginForm, ProductForm, UserEditForm
@@ -70,25 +70,37 @@ def init_routes(app):
             registros.append(registro.name)
         return render_template('table_product.html',registros=registros)
     
-    @app.route('/user_edit',methods=["GET","POST"])
-    def user_edit():
+    @app.route('/get_user',methods=["GET","POST"])
+    def get_user():
         form = UserEditForm()
-        if form.id.data != None or form.username.data != None or form.email.data != None:
+        if (form.id.data != None and form.id.data != "") or (form.username.data != None and form.username.data != "") or (form.email.data != None and form.email.data != None):
+            print(form.id.data)
             idData = request.form["id"]
             nameData = request.form["username"]
             mailData = request.form["email"]
             if idData != None:
-                # flash(f'ID: {idData}','success')
-                user = User.query.filter_by(id=idData).first()
-                flash(user,'success')
+                return redirect(f'/get_user/edit/<"id,{idData}">')
             elif nameData != None:
-                # flash(f'Nombre de usuario: {nameData}','success')
-                user = User.query.filter_by(username=f"%{nameData}%")
-                flash(user,'success')
+                return redirect(f'/get_user/edit/<"username,{nameData}">')
             elif mailData != None:
-                # flash(f'Email: {mailData}','success')
-                user = User.query.filter_by(email=f"%{mailData}%")
-                flash(user,'success')
-        else:
-            flash(f'{form.id.data},{form.username.data},{form.email.data}','danger')
+                return redirect(f'/get_user/edit/<"mail,{mailData}">')
+        return render_template('get_user.html',form=form)
+    
+    @app.route('/get_user/edit/<data>',methods=["GET","POST"])
+    def edit_user(data):
+        form = RegistrationForm()
+        userData = data.split(",")
+        if userData[0] == "id":
+            user = User.query.filter_by(id=userData[1]).first()
+        elif userData[0] == "username":
+            user = User.query.filter_by(username=userData[1])
+        elif userData[0] == "mail":
+            user = User.query.filter_by(email=userData[1])
+        if form.validate_on_submit():   
+            user.username = form.username.data
+            user.email = form.email.data
+            user.password = form.password.data
+            db.session.commit()                                                 #No funciona
+            flash('¡La cuenta ha sido modificada exitosamente!', 'success')
+            return redirect('index')
         return render_template('user_edit.html',form=form)

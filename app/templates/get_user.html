@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block head %}
+<script src="{{ url_for('static',filename = 'scripts/user_edit.js') }}" defer></script>
+{% endblock %}
 {% block title %}Editor de usuario{% endblock %}
 {% block content %}
 <div class="form-container">
@@ -6,22 +9,22 @@
     <form method="POST">
         {{ form.hidden_tag() }}
         <div class="form-group">
+            {{ form.selector.label(class="form-label") }}
+            {{ form.selector(class="form-control") }}
+        </div>
+        <div class="form-group" id="id">
+            {{ form.id.label(class="form-label") }}
+            {{ form.id(class="form-control") }}
+        </div>
+        <div class="form-group" id="username">
             {{ form.username.label(class="form-label") }}
             {{ form.username(class="form-control") }}
         </div>
-        <div class="form-group">
+        <div class="form-group" id="email">
             {{ form.email.label(class="form-label") }}
             {{ form.email(class="form-control") }}
         </div>
-        <div class="form-group">
-            {{ form.password.label(class="form-label") }}
-            {{ form.password(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.confirm_password.label(class="form-label") }}
-            {{ form.confirm_password(class="form-control") }}
-        </div>
-        <div class="form-group">
+        <div class="form-group" id="submit">
             {{ form.submit.label(class="form-label") }}
             {{ form.submit(class="form-control") }}
         </div>
